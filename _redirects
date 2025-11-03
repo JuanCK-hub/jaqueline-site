@@ -1,10 +1,8 @@
 
-# Enviar TODO lo que llegue por jaquelinemartinez.com (con y sin www) -> dominio principal (1 salto)
- /*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
+/*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
   Host: jaquelinemartinez.com
 
- /*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
+/*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
   Host: www.jaquelinemartinez.com
 
-# Para cualquier otro host por http, forzar https (regla genérica al final)
-http://*  https://:host/:splat  301!
+  
