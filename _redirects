@@ -1,9 +1,10 @@
 
-# Fuerza HTTPS
+# 1 Fuerza HTTPS
 http://*  https://:host/:splat  301!
 
+# 2 Redirige jaquelinemartinez.com (raíz y www) hacia el dominio principal
+/*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
+  Host: jaquelinemartinez.com
 
-# (Deja comentadas las siguientes líneas por ahora)
-# Cuando el dominio jaquelinediseñointerior.com esté listo y activo:
-# https://jaquelinemartinez.com/*       https://xn--jaquelinediseointerior-wec.com/:splat  301!
-# https://www.jaquelinemartinez.com/*   https://xn--jaquelinediseointerior-wec.com/:splat  301!
+/*  https://xn--jaquelinediseointerior-wec.com/:splat  301!
+  Host: www.jaquelinemartinez.com
