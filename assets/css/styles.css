@@ -1523,6 +1523,12 @@ hr {
   margin: auto clamp(40px, 6vw, 90px);
   font-size: clamp(0.8rem, 1.5vw, 4rem);
   color: var(--fg);
+  padding: clamp(20px, 3vw, 40px);
+}
+
+.headlines--aviso-legal {
+  margin-bottom: clamp(20px, 4vw, 40px);
+
 }
 
 .headlines--privacy {
@@ -1849,6 +1855,73 @@ hr {
   color: var(--fg);
   margin-top: clamp(10px, 2vw, 40px);
   margin-left: clamp(10px, 2vw, 32px);
+}
+
+.main--gracias {
+  height: 60%;
+  padding: clamp(60px, 10vw, 100px);
+}
+
+.main--gracias--container {
+height: 100%;
+}
+
+
+.header-gracias__container {
+  justify-content: center;
+  display: grid;
+  margin-top: clamp(35px, 7vw, 60px);
+}
+
+.header-gracias__logo{
+  width: clamp(70px, 23vw, 150px);
+
+}
+
+
+.header-gracias__logo--2 {
+  width: clamp(100px, 25vw, 200px);
+}
+
+.header-gracias__logo--wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.main--gracias h1 {
+  font-family: 'hero', sans-serif;
+  font-weight: normal;
+  font-size: clamp(1.1rem, 2.6vw, 2rem);
+  color: var(--fg);
+}
+
+.main--gracias h3 {
+  font-family: 'hero', sans-serif;
+  font-weight: normal;
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  color: var(--fg);
+  margin-top: clamp(20px, 4vw, 40px);
+}
+
+.main--gracias__button {
+  background-color: var(--fg);
+  color: #fff;
+  font-family: 'hero', sans-serif;
+  text-decoration: none;
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
+  border-radius: 8px;
+  margin-top: clamp(30px, 5vw, 60px);
+  display: inline-block;
+}
+
+.main--gracias__button:hover {
+  cursor: pointer;
+  box-shadow: 5px 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.main--gracias__button:active {
+  transform: scale(0.95);
 }
 
 @media (max-width: 750px) {

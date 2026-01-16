@@ -1,55 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://jaquelinediseñointerior.com/</loc>
+    <loc>https://jaquelinemartinez.com/index.html</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/servicios/</loc>
+    <loc>https://jaquelinemartinez.com/servicios/index.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/main.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/main.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/aviñon.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/aviñon.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/cerritos.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/cerritos.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/guaduales.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/guaduales.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/malabarR.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/malabarR.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/malabarL.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/malabarL.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/portafolio/marari.html</loc>
+    <loc>https://jaquelinemartinez.com/portafolio/marari.html</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/nosotros/</loc>
+    <loc>https://jaquelinemartinez.com/nosotros/index.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/contacto/</loc>
+    <loc>https://jaquelinemartinez.com/contacto/index.html</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/legal/aviso-legal/</loc>
+    <loc>https://jaquelinemartinez.com/legal/aviso-legal/index.html</loc>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://jaquelinediseñointerior.com/legal/politica-de-privacidad/</loc>
+    <loc>https://jaquelinemartinez.com/legal/politica-de-privacidad/index.html</loc>
     <priority>0.6</priority>
   </url>
+
+  <url>
+    <loc>https://jaquelinemartinez.com/gracias/index.html</loc>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://jaquelinemartinez.com/FormCheckout/index.html</loc>
+    <priority>0.1</priority>
+  </url>
+
+
 </urlset>
