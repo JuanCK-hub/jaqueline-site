@@ -136,41 +136,29 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-  const root  = document.getElementById('servicios-content');
-  const btn   = document.getElementById('bton-servicios');
-  const paths = root?.querySelector('.paths');
+  const buttons = document.querySelectorAll('.bton-servicios');
+  if (!buttons.length) return;
 
-  if (!root || !btn || !paths) return;
-
-  // accesibilidad básica
-  btn.type = 'button';
-  btn.setAttribute('aria-controls', 'paths');
-  btn.setAttribute('aria-expanded', 'false');
-  paths.setAttribute('aria-hidden', 'true');
-
-  btn.addEventListener('click', () => {
-    const open = root.classList.toggle('is-open');
-    btn.setAttribute('aria-expanded', String(open));
-    paths.setAttribute('aria-hidden', String(!open));
-
-    if (open) {
-      // Esperar un poco a que el layout cambie (para móvil)
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          // Desplázate directamente hasta los paths (más estable que root)
-          paths.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 80);
-      });
-    }
-  });
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.bton-proyecto').forEach(btn => {
+  buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      const url = btn.dataset.target;
-      window.location.href = url;
+      const target = document.querySelector(btn.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
     });
   });
 });
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.bton-proyecto');
+  if (!buttons.length) return;
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.dataset.target;
+      if (url) window.location.href = url;
+    });
+  });
+});
+
 
