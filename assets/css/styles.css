@@ -2106,10 +2106,10 @@ height: 100%;
     border-radius: 4px;
   }
   .image-box-2 {
-    height: clamp(150px, 36vw, 250px);
+    height: clamp(160px, 36vw, 260px);
     border-radius: 6px;
     /* IMPORTANTE: quitar el margin-top gigante que empujaba todo */
-    margin-top: clamp(100px, 13vw, 140px);
+    margin-top: clamp(80px, 12vw, 120px);
   }
 
   /* Texto */
@@ -2201,8 +2201,9 @@ height: 100%;
   }
 
   .btn-wrapper-consulta {
-    margin-top: -350px;
+    margin-top: -250px;
   }
+
   .grid-equipo {
   display: grid;
   grid-template-columns: 1fr 1fr;
