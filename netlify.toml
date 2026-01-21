@@ -1,7 +1,0 @@
-[[redirects]]
-  from = "/*"
-  to = "https://xn--jaquelinediseointerior-wec.com/:splat"
-  status = 301
-  force = true
-  conditions = { Host = ["jaquelinemartinez.com", "www.jaquelinemartinez.com"] }
-

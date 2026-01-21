@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const payload = {
-  customerType, // 👈 AQUÍ VA (nuevo)
+    customerType, // 👈 AQUÍ VA (nuevo)
 
   // service principal
   service: servicios.includes("paquete-luz") ? "luz" : (servicios[0] || ""),
