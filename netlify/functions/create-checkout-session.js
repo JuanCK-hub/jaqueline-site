@@ -23,10 +23,6 @@ exports.handler = async (event) => {
       }
     }
 
-      // 👇 MODO PRUEBA (solo si PAYMENT_MODE=dev)
-      if (process.env.PAYMENT_MODE === "dev") {
-      amount = 100; // €1.00
-      }
 
 
     if (!amount || amount < 50) {
