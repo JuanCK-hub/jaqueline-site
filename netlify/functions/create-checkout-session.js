@@ -72,7 +72,7 @@ exports.handler = async (event) => {
         city: customer?.city || "",
         country: customer?.country || "",
       },
-      return_url: `${baseUrl}/gracias?session_id={CHECKOUT_SESSION_ID}`,
+      return_url: `${baseUrl}/gracias/index.html?session_id={CHECKOUT_SESSION_ID}`,
     });
 
     return {

@@ -38,6 +38,7 @@
       <main class="main--gracias--container">
 
     <section class="main--gracias">
+      
       <h1 class="main--gracias__title"> 
         <strong id="paymentStatus">Verificando tu pago...</strong>
       </h1>
@@ -109,31 +110,35 @@
     
    <script>
   (async function () {
-    const el = document.getElementById("paymentStatus");
+    const el = document.getElementById("payment-status");
     if (!el) return;
 
     const params = new URLSearchParams(window.location.search);
     const sessionId = params.get("session_id");
 
     if (!sessionId) {
-      el.textContent = "No encontramos el identificador de la compra.";
+      el.textContent = "No encontramos el ID de la sesión. Si crees que es un error, contáctanos.";
       return;
     }
 
     try {
-      const res = await fetch(`/netlify/functions/verify-session?session_id=${encodeURIComponent(sessionId)}`);
+      // Llama tu función en Netlify
+      const res = await fetch(`/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`);
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data?.error || "Error verificando pago");
+      // Stripe suele devolver payment_status: "paid", "unpaid", etc.
+      const status = (data.payment_status || "").toLowerCase();
 
-      if (data.payment_status === "paid") {
-        el.textContent = "✅ Pago confirmado. ¡Gracias por tu compra! Hemos recibido tu solicitud.";
+      if (status === "paid") {
+        el.textContent = "✅ Pago confirmado. Hemos recibido tu solicitud y te contactaremos pronto.";
+      } else if (status === "unpaid") {
+        el.textContent = "⚠️ El pago no se completó. Si lo intentaste, revisa tu banco o vuelve a intentar.";
       } else {
-        el.textContent = "⏳ Tu pago aún no aparece como confirmado. Si ya pagaste, espera 1 minuto y recarga.";
+        el.textContent = `⏳ Estado del pago: ${data.payment_status || "pendiente"}. Si tarda, espera unos segundos y recarga.`;
       }
-    } catch (e) {
-      el.textContent = "Hubo un problema verificando el pago. Por favor recarga o contáctanos.";
-      console.error(e);
+    } catch (err) {
+      el.textContent = "Hubo un problema verificando el pago. Si ya pagaste, contáctanos y lo validamos manualmente.";
+      console.error(err);
     }
   })();
 </script>
