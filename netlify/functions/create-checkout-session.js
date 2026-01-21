@@ -44,7 +44,7 @@ exports.handler = async (event) => {
     const productName = servicesList.join(" + ");
 
     // ✅ 2) Return URL dinámico: local o producción
-    const baseUrl = process.env.URL || "http://localhost:8888";
+    const baseUrl = process.env.URL || process.env.DEPLOY_PRIME_URL || "http://localhost:8888";
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
