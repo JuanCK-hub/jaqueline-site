@@ -43,6 +43,8 @@
         <strong >Verificando tu pago...</strong>
       </h1>
 
+      <p id="payment-status-detail" class="main--gracias__message"></p>
+
       <h3 class="main--gracias__message" id="thanksMsg1">
         Esto puede tardar unos segundos. No cierres esta página.
       </h3>
@@ -108,45 +110,53 @@
   </div>
     </footer>
     
-   <script>
+   
+    <script>
   (async function () {
-    const el = document.getElementById("payment-status");
-    if (!el) return;
+    const statusEl = document.getElementById("payment-status");
+    const detailEl = document.getElementById("payment-status-detail");
 
-    const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get("session_id");
-
-    if (!sessionId) {
-      el.textContent = "No encontramos el ID de la sesión. Si crees que es un error, contáctanos.";
-      return;
+    function fail(msg) {
+      statusEl.textContent = "No pudimos verificar tu pago.";
+      if (detailEl) {
+        detailEl.style.display = "block";
+        detailEl.textContent = msg || "Intenta de nuevo o contáctanos.";
+      }
     }
 
     try {
-      // Llama tu función en Netlify
-      const res = await fetch(`/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`);
-      
-      const text = await res.text();
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get("session_id");
 
-        let data;
-        try {
-          data = JSON.parse(text);
-        } catch {
-          throw new Error(text);
-        }
-
-      // Stripe suele devolver payment_status: "paid", "unpaid", etc.
-      const status = (data.payment_status || "").toLowerCase();
-
-      if (status === "paid") {
-        el.textContent = "✅ Pago confirmado. Hemos recibido tu solicitud y te contactaremos pronto.";
-      } else if (status === "unpaid") {
-        el.textContent = "⚠️ El pago no se completó. Si lo intentaste, revisa tu banco o vuelve a intentar.";
-      } else {
-        el.textContent = `⏳ Estado del pago: ${data.payment_status || "pendiente"}. Si tarda, espera unos segundos y recarga.`;
+      if (!sessionId) {
+        fail("Falta session_id en la URL.");
+        return;
       }
-    } catch (err) {
-     if (el) el.textContent = "Hubo un problema verificando el pago. Si ya pagaste, contáctanos y lo validamos manualmente.";
-      console.error(err);
+
+      const url = `/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`;
+
+      const res = await fetch(url, { cache: "no-store" });
+      const data = await res.json();
+
+      if (!res.ok) {
+        fail(data?.error || "Error del servidor.");
+        return;
+      }
+
+      const paid = data.payment_status === "paid" && data.status === "complete";
+
+      if (paid) {
+        statusEl.innerHTML = "<strong>¡Pago confirmado!</strong> Hemos recibido tu solicitud.";
+        if (detailEl) detailEl.style.display = "none";
+      } else {
+        statusEl.textContent = "Pago aún en proceso…";
+        if (detailEl) {
+          detailEl.style.display = "block";
+          detailEl.textContent = `Estado: ${data.payment_status} / ${data.status}`;
+        }
+      }
+    } catch (e) {
+      fail(e.message);
     }
   })();
 </script>
