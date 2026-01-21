@@ -43,7 +43,7 @@
         <strong >Verificando tu pago...</strong>
       </h1>
 
-      <p id="payment-status-detail" class="main--gracias__message"></p>
+      <p id="payment-status-detail" class="main--gracias__message" style="display:none;"></p>
 
       <h3 class="main--gracias__message" id="thanksMsg1">
         Esto puede tardar unos segundos. No cierres esta página.
@@ -51,7 +51,7 @@
 
       <h3 class="main--gracias__message" id="thanksMsg2"></h3>
       <h3 class="main--gracias__message" id="thanksMsg3"></h3>
-      <a href="/portafolio/main.html" class="main--gracias__button" id="thanksCta">Explorar más proyectos</a>
+      <a href="/portafolio/main.html" class="main--gracias__button" id="thanksCta" style="display:none;">Explorar más proyectos</a>
 
       <div class="header-gracias__container">
         
@@ -110,57 +110,143 @@
   </div>
     </footer>
     
-   
-    <script>
+   <script>
   (async function () {
     const statusEl = document.getElementById("payment-status");
     const detailEl = document.getElementById("payment-status-detail");
 
-    function fail(msg) {
-      statusEl.textContent = "No pudimos verificar tu pago.";
+    const msg1 = document.getElementById("thanksMsg1");
+    const msg2 = document.getElementById("thanksMsg2");
+    const msg3 = document.getElementById("thanksMsg3");
+    const cta  = document.getElementById("thanksCta");
+
+    // Helpers UI
+    function setVerifying() {
+      statusEl.innerHTML = "<strong>Verificando tu pago...</strong>";
+      if (detailEl) {
+        detailEl.style.display = "none";
+        detailEl.textContent = "";
+      }
+      if (msg1) msg1.textContent = "Esto puede tardar unos segundos. No cierres esta página.";
+      if (msg2) msg2.textContent = "";
+      if (msg3) msg3.textContent = "";
+      if (cta) cta.style.display = "none"; // 👈 oculta CTA mientras verificamos
+    }
+
+    function setPaid(email) {
+      statusEl.innerHTML = "<strong>¡Pago confirmado!</strong>";
+      if (detailEl) {
+        detailEl.style.display = "none";
+        detailEl.textContent = "";
+      }
+      if (msg1) msg1.textContent = "Hemos recibido tu solicitud y nos pondremos en contacto contigo pronto.";
+      if (msg2) msg2.textContent = "Nuestro equipo revisará la información y se pondrá en contacto contigo.";
+      if (msg3) msg3.textContent = "Te contactaremos en un plazo de 24 a 48 horas.";
+      if (cta) cta.style.display = "inline-flex";
+
+      // (Opcional) si quieres mostrar el email:
+      // if (msg3 && email) msg3.textContent += ` (Confirmación enviada a: ${email})`;
+    }
+
+    function setPending(payment_status, status) {
+      statusEl.innerHTML = "<strong>Pago en proceso…</strong>";
+      if (detailEl) {
+        detailEl.style.display = "block";
+        detailEl.textContent = `Estado: ${payment_status || "?"} / ${status || "?"}`;
+      }
+      if (msg1) msg1.textContent = "Estamos esperando confirmación del pago.";
+      if (msg2) msg2.textContent = "Si tarda más de 1 minuto, revisa tu correo o contáctanos.";
+      if (msg3) msg3.textContent = "";
+      if (cta) cta.style.display = "none";
+    }
+
+    function setFail(msg) {
+      statusEl.innerHTML = "<strong>No pudimos verificar tu pago.</strong>";
       if (detailEl) {
         detailEl.style.display = "block";
         detailEl.textContent = msg || "Intenta de nuevo o contáctanos.";
       }
+      if (msg1) msg1.textContent = "Si ya pagaste, no te preocupes: podemos confirmar manualmente.";
+      if (msg2) msg2.textContent = "Escríbenos a comercial@jaquelinemartinez.com con tu correo y la hora del pago.";
+      if (msg3) msg3.textContent = "";
+      if (cta) cta.style.display = "inline-flex"; // o "none" si prefieres ocultarlo
     }
 
-    try {
-      const params = new URLSearchParams(window.location.search);
-      const sessionId = params.get("session_id");
+    // --- Arranque UI
+    setVerifying();
 
-      if (!sessionId) {
-        fail("Falta session_id en la URL.");
-        return;
-      }
+    // --- Lee session_id
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
 
-      const url = `/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`;
+    if (!sessionId) {
+      setFail("Falta session_id en la URL. (Stripe no devolvió el parámetro)");
+      return;
+    }
 
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
+    // Endpoint Netlify
+    const endpoint = `/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`;
 
-      if (!res.ok) {
-        fail(data?.error || "Error del servidor.");
-        return;
-      }
+    // Polling: intenta varias veces por si Stripe tarda
+    const MAX_TRIES = 12;     // 12 intentos
+    const WAIT_MS = 1500;     // cada 1.5s (total ~18s)
 
-      const paid = data.payment_status === "paid" && data.status === "complete";
+    for (let i = 1; i <= MAX_TRIES; i++) {
+      try {
+        const res = await fetch(endpoint, { cache: "no-store" });
 
-      if (paid) {
-        statusEl.innerHTML = "<strong>¡Pago confirmado!</strong> Hemos recibido tu solicitud.";
-        if (detailEl) detailEl.style.display = "none";
-      } else {
-        statusEl.textContent = "Pago aún en proceso…";
-        if (detailEl) {
-          detailEl.style.display = "block";
-          detailEl.textContent = `Estado: ${data.payment_status} / ${data.status}`;
+        // Si Netlify devuelve HTML/404, esto lo detecta
+        const contentType = res.headers.get("content-type") || "";
+        const rawText = await res.text();
+
+        let data = null;
+        if (contentType.includes("application/json")) {
+          data = JSON.parse(rawText);
+        } else {
+          // No es JSON -> probablemente 404/HTML
+          if (!res.ok) {
+            setFail(`Backend no respondió JSON (HTTP ${res.status}).`);
+            return;
+          }
+          // Si fuese 200 pero no JSON (raro), también falla:
+          setFail("Respuesta inesperada del backend (no JSON).");
+          return;
+        }
+
+        if (!res.ok) {
+          // error JSON del backend
+          setFail(data?.error || "Error del servidor verificando el pago.");
+          return;
+        }
+
+        const paid = data.payment_status === "paid" && data.status === "complete";
+
+        if (paid) {
+          setPaid(data.customer_email);
+          return;
+        }
+
+        // Si todavía no está pagado/complete, muestra pending y sigue intentando
+        setPending(data.payment_status, data.status);
+
+      } catch (e) {
+        // Error de red / parse
+        if (i === MAX_TRIES) {
+          setFail(e.message);
+          return;
         }
       }
-    } catch (e) {
-      fail(e.message);
+
+      // espera antes del siguiente intento
+      await new Promise(r => setTimeout(r, WAIT_MS));
     }
+
+    // Si llega aquí: no confirmó a tiempo
+    setFail("No se pudo confirmar el pago a tiempo. Si pagaste, contáctanos.");
   })();
 </script>
 
+  
 
   </body>
 </html>
