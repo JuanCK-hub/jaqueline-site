@@ -38,9 +38,9 @@
       <main class="main--gracias--container">
 
     <section class="main--gracias">
-      
-      <h1 class="main--gracias__title"> 
-        <strong id="paymentStatus">Verificando tu pago...</strong>
+
+      <h1 class="main--gracias__title" id="paymentStatus"> 
+        <strong >Verificando tu pago...</strong>
       </h1>
 
       <h3 class="main--gracias__message" id="thanksMsg1">
@@ -124,7 +124,15 @@
     try {
       // Llama tu función en Netlify
       const res = await fetch(`/.netlify/functions/get-session-status?session_id=${encodeURIComponent(sessionId)}`);
-      const data = await res.json();
+      
+      const text = await res.text();
+
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          throw new Error(text);
+        }
 
       // Stripe suele devolver payment_status: "paid", "unpaid", etc.
       const status = (data.payment_status || "").toLowerCase();
@@ -137,7 +145,7 @@
         el.textContent = `⏳ Estado del pago: ${data.payment_status || "pendiente"}. Si tarda, espera unos segundos y recarga.`;
       }
     } catch (err) {
-      el.textContent = "Hubo un problema verificando el pago. Si ya pagaste, contáctanos y lo validamos manualmente.";
+     if (el) el.textContent = "Hubo un problema verificando el pago. Si ya pagaste, contáctanos y lo validamos manualmente.";
       console.error(err);
     }
   })();
