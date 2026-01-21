@@ -77,9 +77,10 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: {"Content-Type": "application/json"}, 
       body: JSON.stringify({ clientSecret: session.client_secret }),
     };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return { statusCode: 500, headers: {"Content-Type": "application/json"}, body: JSON.stringify({ error: err.message }) };
   }
 };

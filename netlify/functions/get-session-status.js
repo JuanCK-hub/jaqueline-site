@@ -11,6 +11,7 @@ exports.handler = async (event) => {
     if (!session_id) {
       return {
         statusCode: 400,
+        headers: {"Content-Type": "application/json"},
         body: JSON.stringify({ error: "Falta session_id" }),
       };
     }
@@ -19,6 +20,7 @@ exports.handler = async (event) => {
 
     return {
       statusCode: 200,
+      headers: { "Content-Type": "application/json"},
       body: JSON.stringify({
         id: session.id,
         payment_status: session.payment_status, // "paid" | "unpaid" | "no_payment_required"
@@ -27,6 +29,6 @@ exports.handler = async (event) => {
       }),
     };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ error: err.message }) };
+    return { statusCode: 500, headers: {"Content-Type": "application/json"}, body: JSON.stringify({ error: err.message }) };
   }
 };
