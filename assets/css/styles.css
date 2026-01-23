@@ -2097,7 +2097,7 @@ height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/imagenes/Diseño_casa_familiar_malabar_lakes.JPG');
+  background-image: url('/assets/imagenes/Diseño_casa_familiar_malabar_lakes.webp');
   background-size: cover;
   background-position: center;
   height: clamp(130px, 23vh, 180px);
@@ -2110,7 +2110,7 @@ height: 100%;
  
   .tres-pilares {
     gap: calc(40px + 4vw, 120px);
-    font-size: (4px, 1vw, 8px);
+    font-size: (4px, 0.7vw, 8px);
   }
 
   /* Grid principal: 3 columnas */
