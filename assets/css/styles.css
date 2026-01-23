@@ -2278,10 +2278,7 @@ height: 100%;
     height: clamp(170px, 27vw, 200px);
   }
  
-  .tres-pilares {
-    gap: calc(40px + 4vw, 120px);
-  }
-
+  
  
  
 
@@ -2294,7 +2291,7 @@ height: 100%;
     height: auto;
   }
 
-  .path
+  
   
   .path--last {
     margin-bottom: clamp(20px, 4vw, 40px);
