@@ -742,7 +742,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/imagenes/Diseño_casa_familiar_malabar_lakes.JPG');
+  background-image: url('/assets/imagenes/Diseño_casa_familiar_malabar_lakes.webp');
   background-size: cover;
   background-position: center;
   height: clamp(150px, 32vh, 320px);
@@ -787,7 +787,7 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/assets/imagenes/Decoración_personalizada_malabar_sala_tv.jpg');
+  background-image: url('/assets/imagenes/Decoración_personalizada_malabar_sala_tv.webp');
   background-size: cover;
   background-position: center;
   height: clamp(150px, 55vh, 550px);
@@ -846,7 +846,7 @@ hr {
 }
 
 .servicios {
-  background-image: url('/assets/imagenes/Copia\ de\ IMG_3738b.png');
+  background-image: url('/assets/imagenes/Copia\ de\ IMG_3738b.webp');
   background-size: cover;
   background-position: center;
   background-position: center;
@@ -1483,7 +1483,7 @@ hr {
 }
 
 .nombre--proyecto-1 {
-  background-image: url('/assets/imagenes/Diseño_casa_familiar_marari.png');
+  background-image: url('/assets/imagenes/Diseño_casa_familiar_marari.webp');
 }
 
 .nombre p, 
@@ -1597,7 +1597,7 @@ hr {
 }
 
 .nombre--proyecto-5 {
-  background-image: url('/assets/imagenes/Diseño\ sala\ principal_malabar\ reservado.png');
+  background-image: url('/assets/imagenes/Diseño\ sala\ principal_malabar\ reservado.webp');
 }
 
 .nombre--proyecto-6 {
