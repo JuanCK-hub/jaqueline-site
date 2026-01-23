@@ -2110,7 +2110,7 @@ height: 100%;
  
   .tres-pilares {
     gap: calc(40px + 4vw, 120px);
-    font-size: (4px, 2vw, 8px);
+    font-size: (4px, 1vw, 8px);
   }
 
   /* Grid principal: 3 columnas */
