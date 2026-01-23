@@ -2106,6 +2106,7 @@ height: 100%;
 
   .bg-img-text-2 {
     height: clamp(170px, 27vw, 200px);
+    width: 100%;
   }
  
   .tres-pilares {
